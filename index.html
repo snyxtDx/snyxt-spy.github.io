@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heart</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #0d1117;
+    }
+    .heart {
+      width: 200px;
+      height: 200px;
+      background-color: red;
+      margin: auto;
+      margin-top: 20vh;
+      transform: rotate(-45deg);
+      animation: pulsar 0.6s linear 0s infinite alternate both;
+    }
+    .heart::before, .heart::after {
+      content: "";
+      width: 200px;
+      height: 200px;
+      background-color: red;
+      position: absolute;
+      border-radius: 50%;
+      z-index: -10;
+    }
+    .heart p {
+      position: absolute;
+      transform: rotate(45deg);
+      left: 30px;
+      top: 60px;
+      font-size: 48px;
+      font-style: oblique;
+      color: white;
+      font-family: 'Dancing Script', cursive;
+    }
+    .heart::before {
+      top: -100px;
+      animation: abefore 0.6s linear 0s infinite alternate both;
+    }
+    .heart::after {
+      left: 100px;
+      animation: aafter 0.6s linear 0s infinite alternate both;
+    }
+    .btn {
+      width: 80px;
+      height: 36px;
+      margin: 20px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      background-color: chartreuse;
+      cursor: pointer;
+    }
+    @keyframes pulsar {
+      from {width: 200px; height: 200px;}
+      to {width: 180px; height: 180px;}
+    }
+    @keyframes abefore {
+      from {top: -100px; width: 200px; height: 200px;}
+      to {top: -90px; width: 180px; height: 180px;}
+    }
+    @keyframes aafter {
+      from {left: 100px; width: 200px; height: 200px;}
+      to {left:  90px; width: 180px; height: 180px;}
+    }
+  </style>
+</head>
+<body>
+  <button class="btn">Reload</button>
+  <div class="heart">
+    <p class="message"></p>
+  </div>
+  <script>
+    (() => {
+      const heart = document.querySelector('.heart');
+      const msg = document.querySelector('.message');
+      const btn = document.querySelector('.btn');
+      const before = document.styleSheets[0].cssRules[6];
+      const after = document.styleSheets[0].cssRules[7];
+      heart.addEventListener('click', () => {
+        stop();
+      });
+      btn.addEventListener('click', () => {
+        start();
+      });
+      function stop() {
+        msg.textContent = 'Amo-te';
+        before.style.animationName = '';
+        after.style.animationName = '';
+        heart.setAttribute('style', 'animation: none;');
+      }
+      function start() {
+        msg.textContent = '';
+        before.style.animationName = 'abefore';
+        after.style.animationName = 'aafter';
+        heart.setAttribute('style', 'animation: animation: pulsar 0.6s linear 0s infinite alternate both;');
+      }
+    })();
+  </script>
+</body>
+</html>
